@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 const { sequelize } = require('./models');
 const QueueManager = require('./QueueManager');
 const WebSocketManager = require('./websocket');
@@ -31,6 +33,19 @@ app.use('/api/counters', require('./routes/counters'));
 app.use('/api/tokens', tokensRouter);
 app.use('/api/staff', require('./routes/staff'));
 app.use('/api/admin', require('./routes/admin'));
+
+const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
 
 // wire queueManager into services and staff routes
 const servicesRouter = require('./routes/services');

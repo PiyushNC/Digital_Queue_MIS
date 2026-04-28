@@ -17,6 +17,26 @@ npm run dev
 
 The app will open automatically on http://localhost:5173
 
+## 🚀 Deployment
+
+The simplest production setup is to deploy the `server/` folder as a single web service. The backend serves the built React app from `client/dist` when it is present.
+
+### Render example
+
+1. Create a new Web Service and point it at the `server/` folder.
+2. Set the build command to `npm run build`.
+3. Set the start command to `npm start`.
+4. Keep `PORT` and `JWT_SECRET` in the service environment variables.
+
+If you deploy the frontend separately, set these client variables during the build:
+
+```bash
+VITE_API_BASE_URL=https://your-backend.example.com/api
+VITE_WS_URL=wss://your-backend.example.com
+```
+
+For local development, no extra client env vars are required.
+
 ## 📋 Features
 
 - **Service Management**: Multiple service types (Loan, Cash, Support)

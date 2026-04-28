@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { getWebSocketUrl } from '../config';
 
 export default function Display() {
   const [nowServing, setNowServing] = useState([]);
   const [waitingByService, setWaitingByService] = useState([]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:5000');
+    const ws = new WebSocket(getWebSocketUrl());
 
     ws.onmessage = (event) => {
       try {

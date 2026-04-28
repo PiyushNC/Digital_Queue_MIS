@@ -4,6 +4,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
+    "build": "npm --prefix ../client install && npm --prefix ../client run build",
     "start": "node server.js"
   },
   "dependencies": {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
+import { getWebSocketUrl } from '../config';
 
 export default function Staff() {
   const [staff, setStaff] = useState(null);
@@ -15,7 +16,7 @@ export default function Staff() {
 
   useEffect(() => {
     // Listen for WebSocket updates to refresh current token in real-time
-    const ws = new WebSocket('ws://localhost:5000');
+    const ws = new WebSocket(getWebSocketUrl());
     ws.onmessage = () => {
       if (counter) fetchCurrentToken(counter.id);
     };
